@@ -1,47 +1,16 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { Delete, Globe, Space, ChevronLeft } from "lucide-react";
-
-const TRANSLATIONS: Record<string, string> = {
-  comer: "eat | eating | food",
-  beber: "drink | drinking | beverage",
-  casa: "house | home",
-  agua: "water",
-  água: "water",
-  olá: "hello | hi",
-  ola: "hello | hi",
-  amor: "love | loving | affection",
-  feliz: "happy | glad | joyful",
-  triste: "sad | unhappy",
-  escola: "school",
-  livro: "book",
-  carro: "car | automobile",
-  rua: "street | road",
-  cidade: "city | town",
-  amigo: "friend | buddy",
-  obrigado: "thank you | thanks",
-  bom: "good | fine | kind",
-  dia: "day | daytime",
-  noite: "night | evening",
-  tempo: "time | weather",
-};
+import {
+  getSuggestions,
+  applySuggestion,
+  type Suggestion,
+} from "@/lib/translations";
 
 const ROWS = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
   ["z", "x", "c", "v", "b", "n", "m"],
 ];
-
-function getCurrentWord(text: string): string {
-  const trimmed = text.trimEnd();
-  const lastSpace = trimmed.lastIndexOf(" ");
-  return lastSpace === -1 ? trimmed : trimmed.slice(lastSpace + 1);
-}
-
-function getSuggestion(word: string): string | null {
-  const normalized = word.toLowerCase().trim();
-  if (!normalized) return null;
-  return TRANSLATIONS[normalized] ?? null;
-}
 
 interface GlassKeyboardProps {
   initialText?: string;
@@ -54,8 +23,8 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const textAreaRef = useRef<HTMLDivElement>(null);
 
-  const currentWord = useMemo(() => getCurrentWord(text), [text]);
-  const suggestion = useMemo(() => getSuggestion(currentWord), [currentWord]);
+  const suggestions = useMemo(() => getSuggestions(text), [text]);
+
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -84,15 +53,10 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
     setText((prev) => prev + "\n");
   }, []);
 
-  const handleSuggestionClick = useCallback(() => {
-    if (!suggestion || !currentWord) return;
-    setText((prev) => {
-      const trimmed = prev.trimEnd();
-      const lastSpace = trimmed.lastIndexOf(" ");
-      const before = lastSpace === -1 ? "" : trimmed.slice(0, lastSpace + 1);
-      return before + suggestion.split(" | ")[0] + " ";
-    });
-  }, [suggestion, currentWord]);
+  const handleSuggestionClick = useCallback((suggestion: Suggestion) => {
+    setText((prev) => applySuggestion(prev, suggestion));
+  }, []);
+
 
   const pressKey = useCallback((key: string, action: () => void) => {
     setActiveKey(key);
@@ -133,24 +97,25 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
 
       {/* Suggestion bar */}
       <div className="mb-4 flex min-h-[44px] items-center gap-2 overflow-x-auto rounded-xl px-1 py-2 no-scrollbar">
-        {suggestion ? (
-          <button
-            type="button"
-            onClick={handleSuggestionClick}
-            className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-all active:scale-95"
-          >
-            {suggestion}
-          </button>
-        ) : currentWord ? (
-          <span className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide opacity-60">
-            {currentWord}
-          </span>
+        {suggestions.length > 0 ? (
+          suggestions.map((s) => (
+            <button
+              key={`${s.words}-${s.text}`}
+              type="button"
+              onClick={() => handleSuggestionClick(s)}
+              className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-all active:scale-95"
+            >
+              {s.text}
+            </button>
+          ))
         ) : (
           <span className="px-2 text-xs tracking-wide text-muted-foreground/50">
             A tradução em inglês aparecerá aqui
           </span>
         )}
       </div>
+
+
 
       {/* Keyboard */}
       <div className="flex flex-col gap-2.5">
