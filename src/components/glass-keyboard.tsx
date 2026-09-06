@@ -97,19 +97,24 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
 
       {/* Suggestion bar */}
       <div className="mb-4 flex min-h-[44px] items-center gap-2 overflow-x-auto rounded-xl px-1 py-2 no-scrollbar">
-        {suggestion ? (
-          <button
-            type="button"
-            onClick={handleSuggestionClick}
-            className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-all active:scale-95"
-          >
-            {suggestion}
-          </button>
-        ) : currentWord ? (
-          <span className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide opacity-60">
-            {currentWord}
-          </span>
+        {suggestions.length > 0 ? (
+          suggestions.map((s) => (
+            <button
+              key={`${s.words}-${s.text}`}
+              type="button"
+              onClick={() => handleSuggestionClick(s)}
+              className="suggestion-pill shrink-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-all active:scale-95"
+            >
+              {s.text}
+            </button>
+          ))
         ) : (
+          <span className="px-2 text-xs tracking-wide text-muted-foreground/50">
+            A tradução em inglês aparecerá aqui
+          </span>
+        )}
+      </div>
+
           <span className="px-2 text-xs tracking-wide text-muted-foreground/50">
             A tradução em inglês aparecerá aqui
           </span>
