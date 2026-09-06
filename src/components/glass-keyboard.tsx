@@ -159,7 +159,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
       <div className="flex flex-col gap-2.5">
         {/* Row 1 */}
         <div className="flex justify-center gap-1.5">
-          {activeRows[0].map((char) => (
+          {activeRows[0]?.map((char) => (
             <KeyButton
               key={char}
               char={char}
@@ -168,6 +168,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
             />
           ))}
         </div>
+
 
         {/* Row 2 */}
         <div className="flex justify-center gap-1.5 px-4">
