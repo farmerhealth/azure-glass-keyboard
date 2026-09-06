@@ -172,7 +172,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
 
         {/* Row 2 */}
         <div className="flex justify-center gap-1.5 px-4">
-          {activeRows[1].map((char) => (
+          {activeRows[1]?.map((char) => (
             <KeyButton
               key={char}
               char={char}
@@ -181,6 +181,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
             />
           ))}
         </div>
+
 
         {/* Row 3 */}
         <div className="flex justify-center gap-1.5">
@@ -192,7 +193,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
               className={isShift ? "bg-primary/30 text-primary-foreground" : ""}
             />
           )}
-          {activeRows[2].map((char) => (
+          {activeRows[2]?.map((char) => (
             <KeyButton
               key={char}
               char={char}
@@ -200,6 +201,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
               onClick={() => pressKey(char, () => handleChar(char))}
             />
           ))}
+
           <ActionKey
             label={<Delete className="h-4 w-4" />}
             active={activeKey === "backspace"}
