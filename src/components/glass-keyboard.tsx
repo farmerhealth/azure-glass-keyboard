@@ -53,15 +53,10 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
     setText((prev) => prev + "\n");
   }, []);
 
-  const handleSuggestionClick = useCallback(() => {
-    if (!suggestion || !currentWord) return;
-    setText((prev) => {
-      const trimmed = prev.trimEnd();
-      const lastSpace = trimmed.lastIndexOf(" ");
-      const before = lastSpace === -1 ? "" : trimmed.slice(0, lastSpace + 1);
-      return before + suggestion.split(" | ")[0] + " ";
-    });
-  }, [suggestion, currentWord]);
+  const handleSuggestionClick = useCallback((suggestion: Suggestion) => {
+    setText((prev) => applySuggestion(prev, suggestion));
+  }, []);
+
 
   const pressKey = useCallback((key: string, action: () => void) => {
     setActiveKey(key);
