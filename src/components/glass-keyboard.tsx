@@ -69,7 +69,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
       setText((prev) => prev + insert);
       setIsShift(false);
     },
-    [isShift]
+    [isShift],
   );
 
   const handleBackspace = useCallback(() => {
@@ -94,19 +94,16 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
     });
   }, [suggestion, currentWord]);
 
-  const pressKey = useCallback(
-    (key: string, action: () => void) => {
-      setActiveKey(key);
-      action();
-      window.setTimeout(() => setActiveKey(null), 120);
-    },
-    []
-  );
+  const pressKey = useCallback((key: string, action: () => void) => {
+    setActiveKey(key);
+    action();
+    window.setTimeout(() => setActiveKey(null), 120);
+  }, []);
 
   const symbolRows = [
     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
     ["@", "#", "$", "%", "&", "*", "-", "+", "(", ")"],
-    ["!", "\"", "'", ":", ";", "/", "?"],
+    ["!", '"', "'", ":", ";", "/", "?"],
   ];
 
   const activeRows = isSymbols ? symbolRows : ROWS;
@@ -169,7 +166,6 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
           ))}
         </div>
 
-
         {/* Row 2 */}
         <div className="flex justify-center gap-1.5 px-4">
           {activeRows[1]?.map((char) => (
@@ -181,7 +177,6 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
             />
           ))}
         </div>
-
 
         {/* Row 3 */}
         <div className="flex justify-center gap-1.5">

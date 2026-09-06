@@ -101,7 +101,6 @@
   --key-text: oklch(0.97 0.01 255);
   --suggestion-bg: oklch(0.36 0.065 255 / 0.38);
   --suggestion-text: oklch(0.95 0.01 255);
-
 }
 
 .dark {
@@ -140,7 +139,6 @@
   --key-text: oklch(0.97 0.01 255);
   --suggestion-bg: oklch(0.36 0.065 255 / 0.38);
   --suggestion-text: oklch(0.95 0.01 255);
-
 }
 
 @layer base {
@@ -206,8 +204,6 @@
   }
 }
 
-
-
 @utility glass-key-active {
   background: linear-gradient(
     180deg,
@@ -251,5 +247,3 @@
     display: none;
   }
 }
-
-
