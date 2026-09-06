@@ -224,3 +224,13 @@
 @utility no-tap-highlight {
   -webkit-tap-highlight-color: transparent;
 }
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
