@@ -131,15 +131,16 @@
   --chart-4: oklch(0.65 0.09 160);
   --chart-5: oklch(0.45 0.07 280);
 
-  --glass: oklch(0.3 0.06 255 / 0.28);
-  --glass-border: oklch(0.55 0.04 255 / 0.22);
-  --glass-highlight: oklch(1 0 255 / 0.12);
-  --glass-shadow: oklch(0.05 0 255 / 0.55);
-  --key-bg: oklch(0.28 0.055 255 / 0.35);
-  --key-bg-active: oklch(0.35 0.07 255 / 0.48);
-  --key-text: oklch(0.96 0.012 255);
-  --suggestion-bg: oklch(0.32 0.06 255 / 0.32);
-  --suggestion-text: oklch(0.94 0.015 255);
+  --glass: oklch(0.35 0.07 255 / 0.34);
+  --glass-border: oklch(0.6 0.05 255 / 0.32);
+  --glass-highlight: oklch(0.95 0.01 255 / 0.18);
+  --glass-shadow: oklch(0.05 0 255 / 0.6);
+  --key-bg: oklch(0.32 0.06 255 / 0.42);
+  --key-bg-active: oklch(0.4 0.075 255 / 0.55);
+  --key-text: oklch(0.97 0.01 255);
+  --suggestion-bg: oklch(0.36 0.065 255 / 0.38);
+  --suggestion-text: oklch(0.95 0.01 255);
+
 }
 
 @layer base {
