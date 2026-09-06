@@ -1,47 +1,16 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { Delete, Globe, Space, ChevronLeft } from "lucide-react";
-
-const TRANSLATIONS: Record<string, string> = {
-  comer: "eat | eating | food",
-  beber: "drink | drinking | beverage",
-  casa: "house | home",
-  agua: "water",
-  água: "water",
-  olá: "hello | hi",
-  ola: "hello | hi",
-  amor: "love | loving | affection",
-  feliz: "happy | glad | joyful",
-  triste: "sad | unhappy",
-  escola: "school",
-  livro: "book",
-  carro: "car | automobile",
-  rua: "street | road",
-  cidade: "city | town",
-  amigo: "friend | buddy",
-  obrigado: "thank you | thanks",
-  bom: "good | fine | kind",
-  dia: "day | daytime",
-  noite: "night | evening",
-  tempo: "time | weather",
-};
+import {
+  getSuggestions,
+  applySuggestion,
+  type Suggestion,
+} from "@/lib/translations";
 
 const ROWS = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
   ["z", "x", "c", "v", "b", "n", "m"],
 ];
-
-function getCurrentWord(text: string): string {
-  const trimmed = text.trimEnd();
-  const lastSpace = trimmed.lastIndexOf(" ");
-  return lastSpace === -1 ? trimmed : trimmed.slice(lastSpace + 1);
-}
-
-function getSuggestion(word: string): string | null {
-  const normalized = word.toLowerCase().trim();
-  if (!normalized) return null;
-  return TRANSLATIONS[normalized] ?? null;
-}
 
 interface GlassKeyboardProps {
   initialText?: string;
@@ -54,8 +23,8 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const textAreaRef = useRef<HTMLDivElement>(null);
 
-  const currentWord = useMemo(() => getCurrentWord(text), [text]);
-  const suggestion = useMemo(() => getSuggestion(currentWord), [currentWord]);
+  const suggestions = useMemo(() => getSuggestions(text), [text]);
+
 
   useEffect(() => {
     if (textAreaRef.current) {
