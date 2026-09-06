@@ -1,24 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { GlassKeyboard } from "@/components/glass-keyboard";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Glass Keyboard — Teclado Virtual" },
+      {
+        name: "description",
+        content:
+          "Teclado virtual para celular com estética Glass UI, tons de azul-marinho e sugestões de tradução em inglês.",
+      },
+      {
+        property: "og:title",
+        content: "Glass Keyboard — Teclado Virtual",
+      },
+      {
+        property: "og:description",
+        content:
+          "Teclado virtual para celular com estética Glass UI, tons de azul-marinho e sugestões de tradução em inglês.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background p-6">
+      {/* Ambient glows for depth */}
+      <div
+        className="pointer-events-none absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full opacity-20 blur-[120px]"
+        style={{
+          background:
+            "radial-gradient(circle, oklch(0.45 0.14 255) 0%, transparent 70%)",
+        }}
       />
-    </div>
+      <div
+        className="pointer-events-none absolute bottom-1/4 right-1/4 h-[400px] w-[400px] rounded-full opacity-15 blur-[100px]"
+        style={{
+          background:
+            "radial-gradient(circle, oklch(0.35 0.1 240) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative z-10 w-full max-w-[520px]">
+        <GlassKeyboard />
+      </div>
+    </main>
   );
 }
