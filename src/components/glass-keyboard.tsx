@@ -115,11 +115,7 @@ export function GlassKeyboard({ initialText = "" }: GlassKeyboardProps) {
         )}
       </div>
 
-          <span className="px-2 text-xs tracking-wide text-muted-foreground/50">
-            A tradução em inglês aparecerá aqui
-          </span>
-        )}
-      </div>
+
 
       {/* Keyboard */}
       <div className="flex flex-col gap-2.5">
